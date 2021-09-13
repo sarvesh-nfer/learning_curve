@@ -216,7 +216,7 @@ class SlideDetectionFromSlot():
     
     def segmentImage(input):
         pixSize = 40
-        img_for_pallavi = cv2.imread(os.path.join(input,"segment.png"))
+        img_for_pallavi = cv2.imread(input+"/loc_output_data/updatedInputImage.png")
 
         dbConn = sqlite3.connect(glob.glob(os.path.join(input_path,'*.db'))[0])
         c1 = dbConn.cursor()
@@ -281,8 +281,8 @@ if __name__ == '__main__':
     else:
         input_path = sys.argv[1]
 
-        onex_p = os.path.join(input_path,'input_image_0.png')
-        white_p = os.path.join(input_path,'onex_white_ref.png')
+        onex_p = os.path.join(input_path,'loc_output_data/input_image_0.png')
+        white_p = os.path.join(input_path,'loc_output_data/onex_white_ref.png')
         log_p = glob.glob(os.path.join(input_path,'*.log'))[0]
         input_img = cv2.imread(onex_p)
         white_img = cv2.imread(white_p)
