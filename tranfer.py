@@ -7,7 +7,7 @@ import shutil
 
 input_path = "/datadrive/wsi_data/compressed_data"
 #input_path = '/datadrive/wsi_data/compressed_data/'
-output_path = "/datadrive/wsi_data/output/"
+output_path = "/home/adminspin/Music/sarvesh/newly"
 if not os.path.exists(output_path):
 	os.mkdir(output_path)
 images=os.listdir(input_path)
@@ -21,6 +21,7 @@ for slide_name in images :
 
 		src = slide_path_input + "/"+"loc_output_data"
 		src2 = slide_path_input + "/" + slide_name +".log"
+		src3 = slide_path_input + "/" + slide_name +".db"
 		if (os.path.exists(src)) :
 			if os.path.exists(slide_path):
 				continue
@@ -29,6 +30,7 @@ for slide_name in images :
 			dst2 = slide_path +"/"
 			shutil.copytree(src, dst)
 			shutil.copy2(src2, dst2)
+			shutil.copy2(src3, dst2)
 		else:
 		    print("No loc_out folder", slide_name)
 
