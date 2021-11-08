@@ -1,3 +1,5 @@
+# take out onex time for white ref comparision for missing dates
+
 import numpy as np
 import cv2
 import pandas as pd
