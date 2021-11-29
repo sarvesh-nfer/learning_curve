@@ -3,6 +3,7 @@ import glob,os,sys
 import sqlite3
 import pandas as pd
 import plotly.express as px
+from html_compare_grid import html_generation
 
 def extract_other(slide_path):
     txt = glob.glob(slide_path+"/*/other.tar")
@@ -146,8 +147,9 @@ def database_csv(slide_path):
     fig1.update_layout(legend_title_text='Legend',width = 2000,height = 1000,yaxis = dict(tickfont = dict(size=20)),xaxis = dict(tickfont = dict(size=20)))
     fig1.update_layout(legend=dict(x=0.01,y=0.99,traceorder="reversed",title_font_family="Times New Roman",font=dict(family="Courier",size=15,
     color="black"),bgcolor="LightSteelBlue",bordercolor="Black",borderwidth=2))
+    fig1.update_layout(hovermode="x")
     # fig1.show()
-    fig1.write_image(slide_path+"/Analysis/best_z.png")
+    fig1.write_html(slide_path+"/Analysis/best_z.html")
 
     fig1= px.line(x = log_merged['slide_name'],y= log_merged['FS_total_time(s)'],color=log_merged['biopsy_type'],markers=True)
     fig1.update_xaxes(title = "Slide Name")
@@ -156,8 +158,9 @@ def database_csv(slide_path):
     fig1.update_layout(legend_title_text='Legend',width = 2000,height = 1000,yaxis = dict(tickfont = dict(size=20)),xaxis = dict(tickfont = dict(size=20)))
     fig1.update_layout(legend=dict(x=0.01,y=0.99,traceorder="reversed",title_font_family="Times New Roman",font=dict(family="Courier",size=15,
     color="black"),bgcolor="LightSteelBlue",bordercolor="Black",borderwidth=2))
+    fig1.update_layout(hovermode="x")
     # fig1.show()
-    fig1.write_image(slide_path+"/Analysis/FS.png")
+    fig1.write_html(slide_path+"/Analysis/FS.html")
 
     fig1= px.line(x = log_merged['slide_name'],y = log_merged['total_acq_time(s)'],text=log_merged['total_acq_time(s)'],color=log_merged['biopsy_type'],markers=True)
     fig1.update_xaxes(title = "Slide Name")
@@ -168,8 +171,9 @@ def database_csv(slide_path):
     fig1.update_layout(legend_title_text='Legend',width = 6000,height = 2000,yaxis = dict(tickfont = dict(size=60)),xaxis = dict(tickfont = dict(size=60)))
     fig1.update_layout(legend=dict(x=0.01,y=0.99,traceorder="reversed",title_font_family="Times New Roman",font=dict(family="Courier",size=40,
     color="black"),bgcolor="LightSteelBlue",bordercolor="Black",borderwidth=2))
+    fig1.update_layout(hovermode="x")
     # fig1.show()
-    fig1.write_image(slide_path+"/Analysis/total.png")
+    fig1.write_html(slide_path+"/Analysis/total.html")
 
 
 
@@ -181,3 +185,7 @@ if __name__ == '__main__':
     print("**"*50)
     print("Started to save CSV")
     database_csv(slide_path)
+    html_name = os.path.split(slide_path)[-1]
+    html_generation.main(slide_path,slide_path+"/Analysis",slide_path+"/Analysis",html_name)
+
+

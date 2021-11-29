@@ -305,7 +305,7 @@ if __name__ == "__main__":
 #     nas_ip = "14.140.231.202"
     nas_path = "/volume1/dicom_data"
     nas_ip = "10.20.0.10"
-    dst_path = "/datadrive/compressed_data"
+    dst_path = "/home/adminspin/Desktop/NAS_data"
     # file1 = open(file_path, "r+")
 
     # print("Output of Readline function is ")
