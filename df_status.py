@@ -3,7 +3,7 @@ import pandas as pd
 import sqlite3
 
 
-txt = glob.glob("/home/adminspin/Desktop/17th_04R_full/*/*.db")
+txt = glob.glob("/home/adminspin/Downloads/coarse_analysis/04R_dbs/*/*.db")
 
 df = pd.DataFrame()
 df2 = pd.DataFrame()
@@ -49,9 +49,10 @@ for i in txt:
         df['grid_extrapolation'] = 'True'
     else:
         df['grid_extrapolation'] = 'False'
+    df['count_grid_extrapolation'] = len(df_grid[(df_grid['z_varition'] < 3.75) & (df_grid['plane_status'] == 1)])
     
     
 #     print(df)
     df2 = df2.append(df)
-
+df2.to_csv("/home/adminspin/Desktop/grid_extra_tried.csv",index=False)
 

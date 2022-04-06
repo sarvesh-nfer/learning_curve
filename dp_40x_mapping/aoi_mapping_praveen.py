@@ -47,10 +47,7 @@ def map_aois_to_1x(aoi_info_list, onex_img):
     return onex_img
 
 if __name__ == '__main__':
-    slide_containing_path = sys.argv[1]
-    slide_name = sys.argv[2]
-
-    slide_path = join(slide_containing_path, slide_name)
+    slide_path = sys.argv[1]
 
     db_path = join(slide_path, slide_name + ".db")
 

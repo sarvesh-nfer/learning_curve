@@ -1,6 +1,6 @@
 import sys
 import os
-# import cv2
+import cv2
 import getopt
 import re
 import shutil
@@ -10,6 +10,8 @@ import numpy as np
 from time import gmtime, localtime, strftime
 from datetime import datetime
 import matplotlib.pyplot as plt
+import sqlite3
+import pandas as pd
 # import pdfkit
 
 ################################################################################
@@ -26,7 +28,7 @@ def InitializeHTML(tag):
   tag = tag + "</style>\n"
   tag = tag + "</head>\n"
   # tag = tag + "<body style=\"background:AntiqueWhite\"><font size=\"5\">CMYK Profiles:"
-  tag = tag + "<body style=\"background:AntiqueWhite\"><font size=\"5\">Grid_validation "
+  tag = tag + "<body style=\"background:AntiqueWhite\"><font size=\"5\">Best-Z Experiment "
   return tag
 
 ################################################################################
@@ -69,37 +71,28 @@ def PopulateResultTable(input_folder_path, output_path,tableTag):
     try:
       path1 = slide_path+"/" + "loc_output_data" + "/whiteCorrectedInput.png"
       path2 = slide_path+"/" + "loc_output_data" + "/best_z_order.png"
-      #path3 = slide_path+"/" + "loc_output_data" + "/fgMaskWithPoints.jpeg"
-      path3 = slide_path+"/" + "loc_output_data" +  "/updatedImageWithBBoxMerged.jpeg"
-      path4 = slide_path+"/" + "loc_output_data" + "/validInvalidGrids.jpeg"
-      path5 = slide_path+"/" + "loc_output_data" + "/finalMergedBbox.jpeg"
+      path3 = slide_path+"/" + "loc_output_data" + "/possible_annotations.jpeg"
+      path4 = slide_path+"/" + "loc_output_data" + "/compositeImage.jpeg"
+      path5 = slide_path+"/" + "loc_output_data" + "/colored_class_info.png"
+      # db_path = os.path.join(slide_path,item+".db")
+      
+      # conn = sqlite3.connect(db_path)
+      # df = pd.read_sql_query("select * from validation_info;",conn)
 
-      path6 = slide_path+"/" + "loc_output_data" + "/foregroundMask.png"
 
       print("path1: ",path1)
       print("path2: ",path2)
       print("path3: ",path3)
       print("path4: ",path4)
-      print("path5: ",path5)
-      print("path6: ",path6)
-      
-      if not os.path.exists(path1):
-        path1 = slide_path+"/" + "loc_output_data" + "/updatedInputImage.jpeg"
 
-      if not os.path.exists(path2):
-        path2 = slide_path+"/" + "loc_output_data" + "/foregroundMask.jpeg"
-
-      if not os.path.exists(path6):
-        continue
       tableTag = tableTag + "<tr>\n"
-      tableTag = tableTag + "<th>"+item+"</th><th>best_z_order</th><th>updatedImageWithBBoxMerged</th><th>validInvalidGrids</th><th>finalMergedBbox</th><th>total_foreground</th>"
+      tableTag = tableTag + "<th>"+item+"</th><th>best_z_order</th><th>possible_annotations</th><th>compositeImage</th><th>colored_class_info</th>"
       tableTag = tableTag + "<tr>\n"
                                                                                 
       if not os.path.exists(path1): print("Path not found : ",path1)
       if not os.path.exists(path2): print("Path not found : ",path2)
       if not os.path.exists(path3): print("Path not found : ",path3)
       if not os.path.exists(path4): print("Path not found : ",path4)
-      if not os.path.exists(path4): print("Path not found : ",path5)
       # if not os.path.exists(path4): print("Path not found : ",path6)
 
       #Add the best focused image 
@@ -112,19 +105,16 @@ def PopulateResultTable(input_folder_path, output_path,tableTag):
 
       #Add the Model MASK 
       tableTag = tableTag + "<td align=\"center\"><img src=\"file:///"
-      tableTag = tableTag +path3+"\" alt=\"File Not Found\" style=\"width:35%;height:50;border:solid\"></td>\n"
+      tableTag = tableTag +path3+"\" alt=\"File Not Found\" style=\"width:65%;height:50;border:solid\"></td>\n"
 
       #Add the Aug MASK 
       tableTag = tableTag + "<td align=\"center\"><img src=\"file:///"
-      tableTag = tableTag +path4+"\" alt=\"File Not Found\" style=\"width:35%;height:95;border:solid\"></td>\n"
+      tableTag = tableTag +path4+"\" alt=\"File Not Found\" style=\"width:65%;height:95;border:solid\"></td>\n"
 
       #Add the Aug MASK 
       tableTag = tableTag + "<td align=\"center\"><img src=\"file:///"
-      tableTag = tableTag +path5+"\" alt=\"File Not Found\" style=\"width:35%;height:95;border:solid\"></td>\n"
+      tableTag = tableTag +path5+"\" alt=\"File Not Found\" style=\"width:65%;height:95;border:solid\"></td>\n"
 
-      #Add the Aug MASK 
-      tableTag = tableTag + "<td align=\"center\"><img src=\"file:///"
-      tableTag = tableTag +path6+"\" alt=\"File Not Found\" style=\"width:35%;height:95;border:solid\"></td>\n"
 
       cv2.waitKey(50) 
     except Exception as msg:

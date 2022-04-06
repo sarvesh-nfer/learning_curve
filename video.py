@@ -6,11 +6,12 @@ import numpy as np
 import cv2
   
 # This will return video from the first webcam on your computer.
-cap = cv2.VideoCapture(2)  
+cap = cv2.VideoCapture(0)  
   
 # Define the codec and create VideoWriter object
-fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+fourcc = cv2.VideoWriter_fourcc(*'FMP4')
 out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (640, 480))
+print(out)
   
 # loop runs if capturing has been initialized. 
 while(True):
@@ -24,7 +25,7 @@ while(True):
       
     # output the frame
     out.write(frame) 
-      
+    print(frame.shape)
     # The original input frame is shown in the window 
     cv2.imshow('Original', frame)
   
