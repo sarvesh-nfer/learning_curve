@@ -1,7 +1,7 @@
 import tarfile
 import os,glob
 
-txt = glob.glob("/home/adminspin/Documents/*/grid_*/grid_*.tar")
+txt = glob.glob("/home/adminspin/Music/stitching_test_slides/*/*.tar")
 
 count = 1
 for i in txt:
