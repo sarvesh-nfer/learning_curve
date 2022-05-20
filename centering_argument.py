@@ -46,16 +46,21 @@ def post_CI(path):
     fig2.add_annotation(text="<b>Number of Steps : <b>"+str(len(post))+"<br><b>Min μ Red : "+\
                    str(round(min(post['MEAN_RED_INTENSITY']),2))+"\t | Max μ Red : <b>"+\
     str(round(max(post['MEAN_RED_INTENSITY']),2))+"</b><br> Min μ Green : <b>"+str(round(min(post['MEAN_GREEN_INTENSITY']),2))+\
-               "</b>\t | Min μ Green : <b>"+str(round(min(post['MEAN_GREEN_INTENSITY']),2))+\
+               "</b>\t | Max μ Green : <b>"+str(round(max(post['MEAN_GREEN_INTENSITY']),2))+\
                "</b><br> Min μ Blue : <b>"+str(round(min(post['MEAN_BLUE_INTENSITY']),2))+\
-               "</b>\t | Min μ Blue : <b>"+str(round(min(post['MEAN_BLUE_INTENSITY']),2))
+               "</b>\t | Max μ Blue : <b>"+str(round(max(post['MEAN_BLUE_INTENSITY']),2))
                ,showarrow=False,font=dict(family="Courier New, monospace",size=12,color="black"),row=1,col=2,
                 x=60, y=254,bordercolor="#c7c7c7",borderwidth=2,borderpad=4,bgcolor="#ffffff",opacity=0.8)
 #     fig2.show()
-    # fig2.write_image(os.path.split(i)[0]+"/"+i.split("/")[-1].split("_")[0]+".png")
-    fig2.show()
+    fig2.write_image(os.path.split(path)[0]+"/"+path.split("/")[-1]+".png")
+    #fig2.show()
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:
-        csv_path = sys.argv[1]
-    post_CI(csv_path)
+        path = sys.argv[1]
+
+    #post_CI(path)
+    
+    for i in glob.glob(path+"/*.csv"):
+        post_CI(i)
+        print("Saved for : ",os.path.split(i)[-1])

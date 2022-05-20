@@ -6,7 +6,8 @@ import numpy as np
 import sys,os,glob
 
 def direct_plot(slide_path):
-
+    print(slide_path)
+    print(glob.glob(slide_path+"/*.db"))
     conn = sqlite3.connect(glob.glob(slide_path+"/*.db")[0])
     df = pd.read_sql_query("select * from grid_info where grid_status = 10;",conn)
 
@@ -96,13 +97,33 @@ def direct_plot(slide_path):
     fig5.add_annotation(text="<b>Displacement Data For : "+slide_path.split('/')[-1],xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
             size=24,color="RebeccaPurple"))
     # fig5.show()
-    fig5.write_image(slide_path+"/Displacement_plot_"+os.path.split(slide_path)[-1]+".png")
+    fig5.write_image(slide_path+"/Displacement_plot_"+slide_path.split('/')[-1]+".png")
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         path = sys.argv[1]
-    # print(path)
-    for slide in os.listdir(path):
-        slide_path = path +"/"+ slide
-        print(slide_path)
+    # print(slide_path)
+    # direct_plot(slide_path)
+    lst = ["H01BBB27P-2_i11",
+        "H01BBB27P-2_i10",
+        "H01BBB27P-2_i9",
+        "H01BBB27P-2_i8",
+        "H01BBB27P-2_i7",
+        "H01BBB27P-2_i6",
+        "H01BBB27P-2_i5",
+        "H01BBB27P-2_i4",
+        "H01BBB27P-2_i3",
+        "H01BBB27P-2_i2",
+        "H01BBB27P-2_i1",
+        "H01BBB27P-2_i0",
+        "H01BBB27P-2_i12",
+        "H01BBB27P-2_i13", 
+        "H01BBB27P-2_i14", 
+        "H01BBB27P-2_i15",
+        "H01BBB27P-2_i16", 
+        "H01BBB27P-2_i17", 
+        "H01BBB27P-2_i18", 
+        "H01BBB27P-2_i19"]
+    for i in lst:
+        slide_path = path+"/"+i
         direct_plot(slide_path)
