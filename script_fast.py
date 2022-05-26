@@ -75,9 +75,34 @@ def plot_mutiple(path):
         fig3.update_yaxes(title="Count")
         fig3.update_layout(width=1800,height=800)
         fig3.update_traces(textfont_size=20, textposition="outside",textangle=0, cliponaxis=True)
-        fig3.add_annotation(text="<b>Stack Shift Data <b>",xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
+        fig3.add_annotation(text="<b>Stack Shift Data for <b>H01EBB46P-5403",xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
                 size=24,color="RebeccaPurple"))
-        # fig3.show()
+        fig3.add_vline(x=-11.5, line_width=3, line_dash="dash", line_color="red")
+        fig3.add_vline(x=11.5, line_width=3, line_dash="dash", line_color="red")
+
+
+        if round((len(df[(df['x_shift']<=12)&(df['x_shift']>=-12)])/len(df))*100,2) > 95:
+
+            fig3.add_annotation(x=16,y=(df['x_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
+                    text="Percentage of distribution <br>of X-Shift : "+str(round((len(df[(df['x_shift']<=12)&(df['x_shift']>=-12)])/len(df))*100,2)),
+                    showarrow=True,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
+                    borderwidth=2,borderpad=4,bgcolor="green",opacity=0.8,row=1,col=1)
+        else:
+            fig3.add_annotation(x=16,y=(df['x_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
+                text="Percentage of distribution of X-Shift : "+str(round((len(df[(df['x_shift']<=12)&(df['x_shift']>=-12)])/len(df))*100,2)),
+                showarrow=True,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
+                borderwidth=2,borderpad=4,bgcolor="crimson",opacity=0.8,row=1,col=1)
+
+        if round((len(df[(df['y_shift']<=12)&(df['y_shift']>=-12)])/len(df))*100,2) > 95:
+            fig3.add_annotation(x=16,y=(df['y_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
+                    text="Percentage of distribution <br>of Y-Shift : "+str(round((len(df[(df['y_shift']<=12)&(df['y_shift']>=-12)])/len(df))*100,2)),
+                    showarrow=True,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
+                    borderwidth=2,borderpad=4,bgcolor="green",opacity=0.8,row=1,col=2)
+        else:
+            fig3.add_annotation(x=16,y=(df['y_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
+                text="Percentage of distribution <br>of Y-Shift : "+str(round((len(df[(df['y_shift']<=12)&(df['y_shift']>=-12)])/len(df))*100,2)),
+                showarrow=True,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
+                borderwidth=2,borderpad=4,bgcolor="crimson",opacity=0.8,row=1,col=2)
 
 
         fig4 = px.scatter(x=df['x_shift'],y=df['y_shift'],facet_col=df['axes'],facet_col_wrap=2,
@@ -85,6 +110,8 @@ def plot_mutiple(path):
         fig4.for_each_annotation(lambda a: a.update(text="<b> Stack Wise Shift for : "+a.text.split("=")[-1]))
         fig4.update_yaxes(title="Y-Shift Values",showticklabels=True)
         fig4.update_xaxes(title="X-shift Values",showticklabels=True,tickangle=45)
+
+
         # fig.update_yaxes(matches=None)
         fig4.update_layout(width=1800,height=1400)
         fig4.update_traces(marker_color='green')
