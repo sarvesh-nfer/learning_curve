@@ -28,12 +28,12 @@ fig3 = make_subplots(rows=1, cols=2,subplot_titles=("<b>Frequency of X-Shift","<
 fig3.add_trace(
     go.Bar(x=df['x_shift'].value_counts().index,y=df['x_shift'].value_counts().values,
         text=df['x_shift'].value_counts().values,
-        name="X-shift",marker=dict(color="blue")),
+        name="X-shift",marker=dict(color="blue"),showlegend=False),
     row=1, col=1
 )
 fig3.add_trace(
     go.Bar(x=df['y_shift'].value_counts().index,y=df['y_shift'].value_counts().values,
-        text=df['y_shift'].value_counts().values,name="Y-Shift",marker=dict(color="purple")),
+        text=df['y_shift'].value_counts().values,name="Y-Shift",marker=dict(color="purple"),showlegend=False),
     row=1, col=2
 )
 fig3.update_xaxes(title="Shift Values",dtick=1,tickangle=0,range=[-16.9,16.9])
@@ -43,9 +43,17 @@ fig3.update_traces(textfont_size=20, textposition="outside",textangle=0, clipona
 fig3.add_annotation(text="<b>Stack Shift Data across scanner <b>"+str(len(txt)),xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
         size=24,color="RebeccaPurple"))
 
-for idx,i in enumerate(["yellow","blue","green"]):
+for idx,i in enumerate(["yellow","black","green"]):
+    fig3.add_trace(go.Scatter(y=[5000],name=str(idx+1)+"Sigma Limit",
+        line = dict(color=i,width=4,dash="dash")))
+    # fig3.add_trace(go.Scatter(y=[(df['x_shift'].mean() - (idx+1) * df['x_shift'].std())],name=str(idx+1)+"Sigma Limit",
+    #     line = dict(color=i,width=4,dash="dash")))
     fig3.add_vline(x=(df['x_shift'].mean() - (idx+1) * df['x_shift'].std()), line_width=3, line_dash="dash", line_color=i,row=1,col=1)
     fig3.add_vline(x=(df['x_shift'].mean() + (idx+1) * df['x_shift'].std()), line_width=3, line_dash="dash", line_color=i,row=1,col=1)
+
+    fig3.add_vline(x=(df['y_shift'].mean() - (idx+1) * df['y_shift'].std()), line_width=3, line_dash="dash", line_color=i,row=1,col=2)
+    fig3.add_vline(x=(df['y_shift'].mean() + (idx+1) * df['y_shift'].std()), line_width=3, line_dash="dash", line_color=i,row=1,col=2)
+
 
 fig3.add_vline(x=-11.5, line_width=3, line_dash="dash", line_color="red")
 fig3.add_vline(x=11.5, line_width=3, line_dash="dash", line_color="red")
@@ -53,23 +61,23 @@ fig3.add_vline(x=11.5, line_width=3, line_dash="dash", line_color="red")
 
 if round((len(df[(df['x_shift']<=12)&(df['x_shift']>=-12)])/len(df))*100,2) > 95:
 
-    fig3.add_annotation(x=16,y=(df['x_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
+    fig3.add_annotation(x=-12,y=(df['x_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
             text="Percentage of distribution <br>of X-Shift : "+str(round((len(df[(df['x_shift']<=12)&(df['x_shift']>=-12)])/len(df))*100,2)),
             showarrow=True,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
             borderwidth=2,borderpad=4,bgcolor="green",opacity=0.8,row=1,col=1)
 else:
-    fig3.add_annotation(x=16,y=(df['x_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
+    fig3.add_annotation(x=-12,y=(df['x_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
         text="Percentage of distribution <br>of X-Shift : "+str(round((len(df[(df['x_shift']<=12)&(df['x_shift']>=-12)])/len(df))*100,2)),
         showarrow=True,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
         borderwidth=2,borderpad=4,bgcolor="crimson",opacity=0.8,row=1,col=1)
 
 if round((len(df[(df['y_shift']<=12)&(df['y_shift']>=-12)])/len(df))*100,2) > 95:
-    fig3.add_annotation(x=16,y=(df['y_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
+    fig3.add_annotation(x=-16,y=(df['y_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
             text="Percentage of distribution <br>of Y-Shift : "+str(round((len(df[(df['y_shift']<=12)&(df['y_shift']>=-12)])/len(df))*100,2)),
             showarrow=True,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
             borderwidth=2,borderpad=4,bgcolor="green",opacity=0.8,row=1,col=2)
 else:
-    fig3.add_annotation(x=16,y=(df['y_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
+    fig3.add_annotation(x=-16,y=(df['y_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
         text="Percentage of distribution <br>of Y-Shift : "+str(round((len(df[(df['y_shift']<=12)&(df['y_shift']>=-12)])/len(df))*100,2)),
         showarrow=True,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
         borderwidth=2,borderpad=4,bgcolor="crimson",opacity=0.8,row=1,col=2)

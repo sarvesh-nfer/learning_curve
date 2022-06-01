@@ -164,7 +164,7 @@ def plot_mutiple(path):
                                 y = secondary[(secondary['actual_y']>=20)|(secondary['actual_y']<=-20)]['actual_y'],
                                 mode='markers',marker=dict(color='yellow',size=8)),row=1,col=2)
 
-        
+
         fig5.add_trace(go.Scatter(x = primary[(primary['actual_x']>=32)|(primary['actual_x']<=-32)]['actual_x'],
                                 y = primary[(primary['actual_x']>=32)|(primary['actual_x']<=-32)]['actual_y'],
                                 mode='markers',marker=dict(color='red',size=8)),row=1,col=1)
@@ -213,12 +213,62 @@ def plot_mutiple(path):
         fig5.update_layout(showlegend=False,font=dict(family="Courier New, monospace",size=16,color="Black"),width=1700,height=800)
         fig5.update_xaxes(showspikes=True)
         fig5.update_yaxes(showspikes=True)
-        fig5.add_annotation(text="<b>Displacement Data <b>",xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
+        fig5.add_annotation(text="<b>Displacement Data for <b>21 scanners",xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
                 size=24,color="RebeccaPurple"))
         fig5.add_annotation(text="Outside<br>Spec limit", align='left',showarrow=False,
                             xref='paper',yref='paper',x=1,y=0.9,bordercolor='red',borderwidth=2)
         fig5.add_annotation(text="Outside<br>Warning limit", align='left',showarrow=False,
                             xref='paper',yref='paper',x=1,y=0.8,bordercolor='yellow',borderwidth=2)
+
+        if (len(primary[(abs(primary['actual_x']) < 20)&(abs(primary['actual_y']) < 20)])/len(primary) *100) > 99:
+
+            fig5.add_annotation(x=0,y=1,xref="x domain",yref="y domain",
+                    text="Population Distribution <br>within ±20PX : "+str(round(len(primary[(abs(primary['actual_x']) < 20)&(abs(primary['actual_y']) < 20)])/len(primary) *100,2))+"%",
+                    showarrow=False,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
+                    borderwidth=2,borderpad=4,bgcolor="green",opacity=0.8,row=1,col=1)
+        else:
+            fig5.add_annotation(x=0,y=1,xref="x domain",yref="y domain",
+                    text="Population Distribution <br>within ±20PX : "+str(round(len(primary[(abs(primary['actual_x']) < 20)&(abs(primary['actual_y']) < 20)])/len(primary) *100,2))+"%",
+                    showarrow=False,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
+                    borderwidth=2,borderpad=4,bgcolor="green",opacity=0.8,row=1,col=1)
+
+        if (len(primary[(abs(primary['actual_x']) < 32)&(abs(primary['actual_y']) < 32)])/len(primary) *100) > 99:
+
+            fig5.add_annotation(x=0,y=0.9,xref="x domain",yref="y domain",
+                    text="Population Distribution <br>within ±32PX : "+str(round(len(primary[(abs(primary['actual_x']) < 32)&(abs(primary['actual_y']) < 32)])/len(primary) *100,2))+"%",
+                    showarrow=False,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
+                    borderwidth=2,borderpad=4,bgcolor="green",opacity=0.8,row=1,col=1)
+        else:
+            fig5.add_annotation(x=0,y=0.9,xref="paper",yref="paper",
+                    text="Population Distribution <br>within ±32PX : "+str(round(len(primary[(abs(primary['actual_x']) < 32)&(abs(primary['actual_y']) < 32)])/len(primary) *100,2))+"%",
+                    showarrow=False,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
+                    borderwidth=2,borderpad=4,bgcolor="green",opacity=0.8,row=1,col=1)
+
+
+
+        if (len(secondary[(abs(secondary['actual_x']) < 20)&(abs(secondary['actual_y']) < 20)])/len(secondary) *100) > 99:
+
+            fig5.add_annotation(x=0,y=1,xref="x domain",yref="y domain",
+                    text="Population Distribution <br>within ±20PX : "+str(round(len(secondary[(abs(secondary['actual_x']) < 20)&(abs(secondary['actual_y']) < 20)])/len(secondary) *100,2))+"%",
+                    showarrow=False,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
+                    borderwidth=2,borderpad=4,bgcolor="green",opacity=0.8,row=1,col=2)
+        else:
+            fig5.add_annotation(x=0,y=1,xref="x domain",yref="y domain",
+                    text="Population Distribution <br>within ±20PX : "+str(round(len(secondary[(abs(secondary['actual_x']) < 20)&(abs(secondary['actual_y']) < 20)])/len(secondary) *100,2))+"%",
+                    showarrow=False,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
+                    borderwidth=2,borderpad=4,bgcolor="red",opacity=0.8,row=1,col=2)
+
+        if (len(secondary[(abs(secondary['actual_x']) < 32)&(abs(secondary['actual_y']) < 32)])/len(secondary) *100) > 99:
+
+            fig5.add_annotation(x=0,y=0.9,xref="x domain",yref="y domain",
+                    text="Population Distribution <br>within ±32PX : "+str(round(len(secondary[(abs(secondary['actual_x']) < 32)&(abs(secondary['actual_y']) < 32)])/len(secondary) *100,2))+"%",
+                    showarrow=False,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
+                    borderwidth=2,borderpad=4,bgcolor="green",opacity=0.8,row=1,col=2)
+        else:
+            fig5.add_annotation(x=0,y=0.9,xref="paper",yref="paper",
+                    text="Population Distribution <br>within ±32PX : "+str(round(len(secondary[(abs(secondary['actual_x']) < 32)&(abs(secondary['actual_y']) < 32)])/len(secondary) *100,2))+"%",
+                    showarrow=False,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
+                    borderwidth=2,borderpad=4,bgcolor="red",opacity=0.8,row=1,col=2)
         # fig5.show()
         print("DISPLACEMENT DONE")
 
