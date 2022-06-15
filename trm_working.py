@@ -5,7 +5,7 @@ import numpy as np
 
 sar = {}
 lst = []
-for slide in glob.glob("/home/adminspin/wsi_app/acquired_data/H01EBB41P-2*/*.db"):
+for slide in glob.glob("/home/adminspin/wsi_app/acquired_data/*/*.db"):
     conn = sqlite3.connect(slide)
     df = pd.read_sql_query("select * from grid_info;",conn)
     df2 = df[df['grid_name']=="merged_grid"]
