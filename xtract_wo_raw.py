@@ -2,7 +2,7 @@ import tarfile
 import os,glob
 count = 1
 
-for i in glob.glob("/home/adminspin/Downloads/f2a_3june/*/*.tar"):
+for i in glob.glob("/home/adminspin/Downloads/7th_shipment/*/*.tar"):
     my_tar = tarfile.open(i,'r')
     for member in my_tar.getmembers():
         if not "raw_images" in member.name:

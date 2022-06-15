@@ -49,7 +49,7 @@ def plot_mutiple(path):
         fig2.update_xaxes(title="Z Steps",row=1,col=2)
 
         fig2.update_layout(showlegend=False,font=dict(family="Courier New, monospace",size=16,color="Black"),width=1800,height=800)
-        fig2.add_annotation(text="<b>Calibration Data <b>",xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
+        fig2.add_annotation(text="<b>Calibration Data for <b>"+str(glob.glob(path+"/*.db")[0].split("/")[-1].split("-")[0]),xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
                 size=24,color="RebeccaPurple"))
         # fig2.show()
         print("CENTERING DONE")
@@ -75,7 +75,7 @@ def plot_mutiple(path):
         fig3.update_yaxes(title="Count")
         fig3.update_layout(width=1800,height=800)
         fig3.update_traces(textfont_size=20, textposition="outside",textangle=0, cliponaxis=True)
-        fig3.add_annotation(text="<b>Stack Shift Data for <b>H01EBB46P-5403",xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
+        fig3.add_annotation(text="<b>Stack Shift Data for <b>"+str(glob.glob(path+"/*.db")[0].split("/")[-1].split("-")[0]),xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
                 size=24,color="RebeccaPurple"))
         fig3.add_vline(x=-11.5, line_width=3, line_dash="dash", line_color="red")
         fig3.add_vline(x=11.5, line_width=3, line_dash="dash", line_color="red")
@@ -213,7 +213,7 @@ def plot_mutiple(path):
         fig5.update_layout(showlegend=False,font=dict(family="Courier New, monospace",size=16,color="Black"),width=1700,height=800)
         fig5.update_xaxes(showspikes=True)
         fig5.update_yaxes(showspikes=True)
-        fig5.add_annotation(text="<b>Displacement Data for <b>21 scanners",xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
+        fig5.add_annotation(text="<b>Displacement Data for <b>"+str(glob.glob(path+"/*.db")[0].split("/")[-1].split("-")[0]),xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
                 size=24,color="RebeccaPurple"))
         fig5.add_annotation(text="Outside<br>Spec limit", align='left',showarrow=False,
                             xref='paper',yref='paper',x=1,y=0.9,bordercolor='red',borderwidth=2)
@@ -272,7 +272,7 @@ def plot_mutiple(path):
         # fig5.show()
         print("DISPLACEMENT DONE")
 
-        with open(path+'/report.html', 'a') as f:
+        with open(path+'/'+str(glob.glob(path+"/*.db")[0].split("/")[-1].split("-")[0])+'_report.html', 'a') as f:
             f.write(fig2.to_html(full_html=False, include_plotlyjs='cdn'))
             f.write(fig3.to_html(full_html=False, include_plotlyjs='cdn'))
             f.write(fig4.to_html(full_html=False, include_plotlyjs='cdn'))
