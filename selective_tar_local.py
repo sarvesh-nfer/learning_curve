@@ -1,12 +1,16 @@
 import glob,os
 import tarfile
 
-output_path = "/home/adminspin/Music/scripts/log_all"
+output_path = "/hdd_drive/lost+found/log_all"
+if not os.path.exists(output_path):
+    os.makedirs(output_path)
 
 for i in glob.glob("/mnt/clusterNas/dicom_data/*/other.tar"):
     try:
-        cmd1 = "tar xvf " + i + " -C " + output_path + " /" + i.split("/")[-1]
+
+        slide_name = i.split("/")[-2]
+        cmd1 = "tar xvf " + i + " -C " + output_path + " " + slide_name +".log"
         status = os.system(cmd1)
         print("**"*50,i.split("/")[-1],"**"*50)
     except Exception as msg:
-        print("*Error*"*10,i.split("/")[-1],"*Error*"*50)
+        print("msg",msg)

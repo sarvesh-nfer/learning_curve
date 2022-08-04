@@ -59,8 +59,8 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         path = sys.argv[1]
 
-    #post_CI(path)
+    post_CI(path)
     
-    for i in glob.glob(path+"/*.csv"):
-        post_CI(i)
-        print("Saved for : ",os.path.split(i)[-1])
+    # for i in glob.glob(path+"/*.csv"):
+    #     post_CI(i)
+    #     print("Saved for : ",os.path.split(i)[-1])

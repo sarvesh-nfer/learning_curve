@@ -53,10 +53,12 @@ def plot_mutiple(path):
                 size=24,color="RebeccaPurple"))
         # fig2.show()
         print("CENTERING DONE")
-
+        print(glob.glob(path+"/*.db")[0])
         conn = sqlite3.connect(glob.glob(path+"/*.db")[0])
 
         df = pd.read_sql_query("select * from registration_info;",conn)
+        #sorting the df by stack index 1
+        df = df.sort_values(by=['stack_index_1'])
         df['axes'] = ["img_"+str(y)+" & img_" + str(x) if x > y else "img_"+str(x)+" & img_" + str(y) for x,y in zip(df['stack_index_1'],df['stack_index_2'])]
         df
         fig3 = make_subplots(rows=1, cols=2,subplot_titles=("<b>Frequency of X-Shift","<b>Frequency of Y-Shift"))
@@ -83,23 +85,23 @@ def plot_mutiple(path):
 
         if round((len(df[(df['x_shift']<=12)&(df['x_shift']>=-12)])/len(df))*100,2) > 95:
 
-            fig3.add_annotation(x=16,y=(df['x_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
+            fig3.add_annotation(x=0,y=1,xref="x domain",yref="y domain",
                     text="Percentage of distribution <br>of X-Shift : "+str(round((len(df[(df['x_shift']<=12)&(df['x_shift']>=-12)])/len(df))*100,2)),
                     showarrow=True,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
                     borderwidth=2,borderpad=4,bgcolor="green",opacity=0.8,row=1,col=1)
         else:
-            fig3.add_annotation(x=16,y=(df['x_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
+            fig3.add_annotation(x=0,y=1,xref="x domain",yref="y domain",
                 text="Percentage of distribution of X-Shift : "+str(round((len(df[(df['x_shift']<=12)&(df['x_shift']>=-12)])/len(df))*100,2)),
                 showarrow=True,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
                 borderwidth=2,borderpad=4,bgcolor="crimson",opacity=0.8,row=1,col=1)
 
         if round((len(df[(df['y_shift']<=12)&(df['y_shift']>=-12)])/len(df))*100,2) > 95:
-            fig3.add_annotation(x=16,y=(df['y_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
+            fig3.add_annotation(x=0,y=1,xref="x domain",yref="y domain",
                     text="Percentage of distribution <br>of Y-Shift : "+str(round((len(df[(df['y_shift']<=12)&(df['y_shift']>=-12)])/len(df))*100,2)),
                     showarrow=True,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
                     borderwidth=2,borderpad=4,bgcolor="green",opacity=0.8,row=1,col=2)
         else:
-            fig3.add_annotation(x=16,y=(df['y_shift'].value_counts().iloc[0]),xref="paper",yref="paper",
+            fig3.add_annotation(x=0,y=1,xref="x domain",yref="y domain",
                 text="Percentage of distribution <br>of Y-Shift : "+str(round((len(df[(df['y_shift']<=12)&(df['y_shift']>=-12)])/len(df))*100,2)),
                 showarrow=True,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
                 borderwidth=2,borderpad=4,bgcolor="crimson",opacity=0.8,row=1,col=2)
@@ -220,7 +222,7 @@ def plot_mutiple(path):
         fig5.add_annotation(text="Outside<br>Warning limit", align='left',showarrow=False,
                             xref='paper',yref='paper',x=1,y=0.8,bordercolor='yellow',borderwidth=2)
 
-        if (len(primary[(abs(primary['actual_x']) < 20)&(abs(primary['actual_y']) < 20)])/len(primary) *100) > 99:
+        if (len(primary[(abs(primary['actual_x']) < 20)&(abs(primary['actual_y']) < 20)])/len(primary) *100) > 95:
 
             fig5.add_annotation(x=0,y=1,xref="x domain",yref="y domain",
                     text="Population Distribution <br>within ±20PX : "+str(round(len(primary[(abs(primary['actual_x']) < 20)&(abs(primary['actual_y']) < 20)])/len(primary) *100,2))+"%",
@@ -246,7 +248,7 @@ def plot_mutiple(path):
 
 
 
-        if (len(secondary[(abs(secondary['actual_x']) < 20)&(abs(secondary['actual_y']) < 20)])/len(secondary) *100) > 99:
+        if (len(secondary[(abs(secondary['actual_x']) < 20)&(abs(secondary['actual_y']) < 20)])/len(secondary) *100) > 95:
 
             fig5.add_annotation(x=0,y=1,xref="x domain",yref="y domain",
                     text="Population Distribution <br>within ±20PX : "+str(round(len(secondary[(abs(secondary['actual_x']) < 20)&(abs(secondary['actual_y']) < 20)])/len(secondary) *100,2))+"%",

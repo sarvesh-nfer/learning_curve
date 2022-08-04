@@ -124,6 +124,7 @@ if __name__ == '__main__':
         "H01BBB27P-2_i17", 
         "H01BBB27P-2_i18", 
         "H01BBB27P-2_i19"]
-    for i in lst:
-        slide_path = path+"/"+i
-        direct_plot(slide_path)
+    direct_plot(path) 
+    # for i in lst:
+    #     slide_path = path+"/"+i
+    #     direct_plot(slide_path)
