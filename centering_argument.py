@@ -41,7 +41,7 @@ def post_CI(path):
     fig2.update_xaxes(title="Z Steps",row=1,col=2)
 
     fig2.update_layout(hovermode="x unified",showlegend=False,font=dict(family="Courier New, monospace",size=16,color="Black"),width=1800,height=800)
-    fig2.add_annotation(text="<b>Calibration Data for <b>: "+path.split("/")[-1].split(".")[0],xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
+    fig2.add_annotation(text="<b>Calibration Data for <b>: "+path.split("/")[-2].split(".")[0],xref="paper", yref="paper",showarrow=False,x=0, y=1.11,font=dict(family="Courier New, monospace",
             size=24,color="RebeccaPurple"))
     fig2.add_annotation(text="<b>Number of Steps : <b>"+str(len(post))+"<br><b>Min μ Red : "+\
                    str(round(min(post['MEAN_RED_INTENSITY']),2))+"\t | Max μ Red : <b>"+\
@@ -56,11 +56,14 @@ def post_CI(path):
     #fig2.show()
 
 if __name__ == "__main__":
-    if len(sys.argv) == 2:
-        path = sys.argv[1]
+    # if len(sys.argv) == 2:
+    #     path = sys.argv[1]
 
-    post_CI(path)
-    
-    # for i in glob.glob(path+"/*.csv"):
-    #     post_CI(i)
-    #     print("Saved for : ",os.path.split(i)[-1])
+    #post_CI(path)
+    #/hdd_drive/post_log/H01JBA21P_2022-07-22_04-24-46/centering_check.csv
+    path = "/hdd_drive/post_log"
+    for i in glob.glob(path+"/*/centering_check.csv"):
+        print(i)
+        post_CI(i)
+        print("Saved for : ",os.path.split(i)[-1])
+

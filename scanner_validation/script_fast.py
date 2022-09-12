@@ -15,7 +15,6 @@ def plot_mutiple(path):
 
         post = pd.read_csv(glob.glob(path+"/*centering_check.csv")[0])
 
-
         fig2 = make_subplots(rows=1, cols=2,subplot_titles=("<b>Centring","<b>Illuminaion"))
         fig2.add_trace(go.Scatter(x=post['CENTRING_COORDINATE_X'],y=post['CENTRING_COORDINATE_Y'],
                                 mode='markers',
@@ -54,11 +53,17 @@ def plot_mutiple(path):
         # fig2.show()
         print("CENTERING DONE")
         print(glob.glob(path+"/*.db")[0])
+        
         conn = sqlite3.connect(glob.glob(path+"/*.db")[0])
 
         df = pd.read_sql_query("select * from registration_info;",conn)
         #sorting the df by stack index 1
         df = df.sort_values(by=['stack_index_1'])
+        print(len(df))
+        df = df[df['stack_index_2'] != -1]
+        # print(df[(df['stack_index_1'] == "-1")])
+        # print(len(df[(df['stack_index_1'] != -1)|(df['stack_index_2'] != -1)]))
+        print(len(df))
         df['axes'] = ["img_"+str(y)+" & img_" + str(x) if x > y else "img_"+str(x)+" & img_" + str(y) for x,y in zip(df['stack_index_1'],df['stack_index_2'])]
         df
         fig3 = make_subplots(rows=1, cols=2,subplot_titles=("<b>Frequency of X-Shift","<b>Frequency of Y-Shift"))
@@ -267,7 +272,7 @@ def plot_mutiple(path):
                     showarrow=False,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
                     borderwidth=2,borderpad=4,bgcolor="green",opacity=0.8,row=1,col=2)
         else:
-            fig5.add_annotation(x=0,y=0.9,xref="paper",yref="paper",
+            fig5.add_annotation(x=0,y=0.9,xref="x domain",yref="y domain",
                     text="Population Distribution <br>within ±32PX : "+str(round(len(secondary[(abs(secondary['actual_x']) < 32)&(abs(secondary['actual_y']) < 32)])/len(secondary) *100,2))+"%",
                     showarrow=False,font=dict(family="Courier New, monospace",size=16,color="#ffffff"),align="center",bordercolor="#c7c7c7",
                     borderwidth=2,borderpad=4,bgcolor="red",opacity=0.8,row=1,col=2)
